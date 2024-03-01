@@ -62,9 +62,26 @@ app.put("/api/product/:id", async (req, res) => {
 		if (!product) {
 			return res.status(404).json({ message: "Product not found" });
 		}
-
+		// 返回更新后的数据
 		const updatedProduct = await Product.findById(id);
 		res.status(200).json(updatedProduct);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
+/** 删除产品条目 API */
+app.delete("/api/product/:id", async (req, res) => {
+	try {
+		// 获取参数 id
+		const { id } = req.params;
+		// 寻找并删除产品
+		const product = await Product.findByIdAndDelete(id, req.body);
+		// 如果返回值为 false，抛出 404 并提示未找到产品
+		if (!product) {
+			return res.status(404).json({ message: "Product not found" });
+		}
+		res.status(200).json({ message: "Product deleted successfully" });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
