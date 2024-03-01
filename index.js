@@ -5,6 +5,7 @@ const app = express();
 
 /** 处理 json 的中间件 */
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 /**
  * @param req: 接收到来自客户端的数据
