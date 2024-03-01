@@ -25,6 +25,29 @@ app.post("/api/products", async (req, res) => {
 	}
 });
 
+app.get("/api/products", async (req, res) => {
+	try {
+		// 获取所有数据库内的产品
+		const products = await Product.find({});
+		// 返回数据
+		res.status(200).json(products);
+	} catch (err) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
+app.get("/api/products/:id", async (req, res) => {
+	try {
+		// 根据参数 id 查找条目
+		const { id } = req.params;
+		const product = await Product.findById(id);
+		// 返回数据
+		res.status(200).json(product);
+	} catch (err) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
 mongoose
 	.connect(
 		"mongodb+srv://admin:<password>@curddb.us3eww3.mongodb.net/?retryWrites=true&w=majority&appName=CurdDB"
