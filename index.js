@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Product = require("./models/product.model");
 const app = express();
+
+/** 处理 json 的中间件 */
+app.use(express.json());
 
 /**
  * @param req: 接收到来自客户端的数据
@@ -8,6 +12,17 @@ const app = express();
  **/
 app.get("/", (req, res) => {
 	res.send("hello from node api");
+});
+
+app.post("/api/products", async (req, res) => {
+	try {
+		// 将用户的数据传给mongoose Schema模块，并存储
+		const product = await Product.create(req.body);
+		// 返回 200 状态码和经过Schema生成后的数据
+		res.status(200).json(product);
+	} catch (err) {
+		res.status(500).json({ message: error.message });
+	}
 });
 
 mongoose
