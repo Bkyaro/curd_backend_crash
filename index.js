@@ -36,7 +36,7 @@ app.get("/api/products", async (req, res) => {
 	}
 });
 
-app.get("/api/products/:id", async (req, res) => {
+app.get("/api/product/:id", async (req, res) => {
 	try {
 		// 根据参数 id 查找条目
 		const { id } = req.params;
